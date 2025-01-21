@@ -25,7 +25,7 @@ export default function AdminPage(){
                 </button>
               
       </div>
-      <div className='w-full bg-red-950'>
+      <div className='w-full h-screen bg-red-950'>
 
 
       </div>
