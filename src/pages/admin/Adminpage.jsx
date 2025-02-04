@@ -3,11 +3,12 @@ import { FaRegUser } from "react-icons/fa";
 import { LuSpeaker } from "react-icons/lu";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { Link, Routes, Route } from 'react-router-dom';
+import AdminItemsPage from "./adminItemPage";
 
 export default function AdminPage() {
   return (
     <div className='w-full h-screen flex'>
-      <div className='w-[400px] h-full bg-gray-200'>
+      <div className='w-[200px] h-full bg-gray-200'>
         <button className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center'>
           <BsGraphDown />
           Dashboard
@@ -26,11 +27,11 @@ export default function AdminPage() {
         </button>
 
       </div>
-      <div className='w-[calc(100vw-400px)] h-screen bg-red-950'>
+      <div className='w-[calc(100vw-200px)] h-screen bg-red-950'>
         {/* මෙයද ස්තීර නැති ප්‍රදේශයක් නිසා මෙයත් Routes වලින් wrap කරගන්න ඕනෙ */}
         <Routes path="/*">
           <Route path="/bookings" element={<h2>Bookings</h2>} />
-          <Route path="/items" element={<h2>Items</h2>} />
+          <Route path="/items" element={<AdminItemsPage/>} />
         </Routes>
 
       </div>
