@@ -5,7 +5,6 @@ import Testing from './components/testing';
 import LoginPage from './pages/login/login';
 import { Toaster } from 'react-hot-toast';
 import RegisterPage from "./pages/register/register";
-import ErrorNotFound from './pages/home/error';
 import ProductOverview from './pages/home/productOverview';
 
 
