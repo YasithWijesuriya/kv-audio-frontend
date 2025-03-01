@@ -36,7 +36,7 @@ export default function UpdateItemPage() {
 				console.log(productImages[i]);
 				const promise = mediaUpload(productImages[i]);
 				promises.push(promise);
-
+				
 			}
 
 			updatingImages = await Promise.all(promises);
@@ -63,7 +63,7 @@ export default function UpdateItemPage() {
 						category: productCategory,
 						dimensions: productDimensions,
 						description: productDescription,
-						image: updatingImages
+						image : updatingImages
 					},
 					{
 						headers: {

@@ -24,7 +24,7 @@ function App() {
           <Route path="/register" element={<RegisterPage/>}/>
           <Route path = "/product/:key" element={<ProductOverview/>}/>
           <Route path = "/*" element={<HomePage/>}/> {/* home එකේ url එකෙන් පස්සෙ ගහන අනිත් ඕනෑම අදාල නැති url වලින් එන අයට මුලින්ම home page එක පෙන්නීම*/}
-          <Route path ="/*" element={<ErrorNotFound/>}/>
+          
 
         </Routes>
   </BrowserRouter>
