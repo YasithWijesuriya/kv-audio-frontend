@@ -11,7 +11,7 @@ export default function ProductCard({ item }) {
       <div className="p-4">
         <h2 className="text-2xl font-semibold text-gray-800">{item.name}</h2>
         <p className="text-gray-600 text-sm mt-2">{item.category}</p>
-        <p className="text-gray-700 mt-4">{item.description}</p>
+        <p className="text-gray-700 mt-4 w-[280px]">{item.description}</p>
         <div className="flex justify-between items-center mt-4">
           <span className="text-lg font-bold text-green-500">{item.price}</span>
           <span
