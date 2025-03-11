@@ -32,10 +32,12 @@ export default function AdminPage() {
       <div className='w-[calc(100vw-200px)] h-screen'>
         {/* මෙයද ස්තීර නැති ප්‍රදේශයක් නිසා මෙයත් Routes වලින් wrap කරගන්න ඕනෙ */}
         <Routes path="/*">
+          <Route path="/orders" element={<AdminOrdersPage />} />
+          <Route path="/users" element={<AdminUsersPage />} />
           <Route path="/bookings" element={<h2>Bookings</h2>} />
-          <Route path="/items" element={<AdminItemsPage/>} />
-          <Route path="/items/add" element={<AddItemsPage/>} />
-          <Route path="/items/edit" element={<UpdateItemPage/>}/>
+          <Route path="/items" element={<AdminItemsPage />} />
+          <Route path="/items/add" element={<AddItemsPage />} />
+          <Route path="/items/edit" element={<UpdateItemPage />} />
         </Routes>
 
       </div>
