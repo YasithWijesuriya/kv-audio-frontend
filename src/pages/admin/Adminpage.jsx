@@ -2,8 +2,8 @@ import { BsGraphDown } from "react-icons/bs";
 import { FaRegBookmark, FaRegUser } from "react-icons/fa";
 import { MdOutlineSpeaker } from "react-icons/md";
 import { Link, Route, Routes } from "react-router-dom";
-import AdminItemsPage from "./adminItemPage";
-import AddItemPage from "./addItemsPage";
+import AdminItemsPage from "./adminItemsPage";
+import AddItemPage from "./addItemPage";
 import UpdateItemPage from "./updateItemPage";
 import AdminUsersPage from "./adminUsersPage";
 import AdminOrdersPage from "./adminBookingPage";
@@ -37,7 +37,7 @@ export default function AdminPage(){
   },[])
   return(
     <div className="w-full h-screen flex">
-      <div className="w-[200px] h-full bg-slate-500">
+      <div className="w-[200px] h-full bg-green-200">
         <button className="w-full h-[40px] text-[25px] font-bold  flex justify-center items-center">
           <BsGraphDown/>
           Dashboard
@@ -57,7 +57,6 @@ export default function AdminPage(){
 
       </div>
       <div className="w-[calc(100vw-200px)] ">
-         {/* මෙයද ස්තීර නැති ප්‍රදේශයක් නිසා මෙයත් Routes වලින් wrap කරගන්න ඕනෙ */}
         {userValidated&&<Routes path="/*">
           <Route path="/orders" element={<AdminOrdersPage/>}/>
           <Route path="/users" element={<AdminUsersPage/>}/>
