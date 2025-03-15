@@ -1,5 +1,0 @@
-super base  database password - SNr2#HcmhV!ygx_
-
-anon key - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNseHVmbWp0ZWtoZm5rZXp1ZWdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwODE0OTAsImV4cCI6MjA1NTY1NzQ5MH0.Fu7tRx_bJf0xRh76ER9Sc05t7SbsX4VuVnqDszQydlE
-
-project URL -https://slxufmjtekhfnkezuegp.supabase.co
