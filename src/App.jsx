@@ -1,5 +1,6 @@
+import "./App.css";
+import AdminPage from "./pages/admin/adminPage";
 import { BrowserRouter, Route,Routes } from 'react-router-dom';
-import AdminPage from './pages/admin/adminpage';
 import HomePage from './pages/home/homePage';
 import Testing from './components/testing';
 import LoginPage from './pages/login/login';
