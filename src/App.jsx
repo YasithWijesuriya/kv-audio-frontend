@@ -1,5 +1,5 @@
 import "./App.css";
-import AdminPage from "./pages/admin/adminpage";
+import AdminPage from './pages/admin/adminpage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/home/homePage';
 import Testing from './components/testing';
@@ -22,7 +22,7 @@ function App() {
         <Routes path="/*">
           <Route path="/testing" element={<Testing />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/admin/*" element={<AdminPage />} />
+          <Route path="/admin/*" element={<AdminPage/>} />
           {/*'admin/*' මෙසේ යොදා ඇත්තෙ admin ලෙස url එකේ සදහන් කර එතනින් පස්සෙ ගහන
           ඔනෑම අදාල නැති url වලින් එන අයට මුලින්ම admin page එක පෙන්නීම */}
           <Route path="/register" element={<RegisterPage />} />
