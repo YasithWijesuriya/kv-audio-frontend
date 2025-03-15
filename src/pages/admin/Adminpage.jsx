@@ -3,7 +3,7 @@ import { FaRegBookmark, FaRegUser } from "react-icons/fa";
 import { MdOutlineSpeaker } from "react-icons/md";
 import { Link, Route, Routes } from "react-router-dom";
 import AdminItemsPage from "./adminItemPage";
-import AddItemPage from "./addItemPage";
+import AddItemPage from "./addItemsPage";
 import UpdateItemPage from "./updateItemPage";
 import AdminUsersPage from "./adminUsersPage";
 import AdminOrdersPage from "./adminBookingPage";
