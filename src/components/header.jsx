@@ -1,52 +1,100 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { FaCartShopping } from "react-icons/fa6";
+import { FaSignOutAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import MobileNavPanel from "./mobileNavPanel";
 
 export default function Header() {
 	const [navPanelOpen, setNavPanelOpen] = useState(false);
-  const token = localStorage.getItem("token")
+	const token = localStorage.getItem("token");
+	const [isAdmin, setIsAdmin] = useState(false);
+
+	useEffect(() => {
+		if (!token) {
+			setIsAdmin(false);
+			return;
+		}
+		axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`, {
+			headers: { Authorization: `Bearer ${token}` }
+		}).then((res) => {
+			const user = res.data;
+			setIsAdmin(user?.role === "admin");
+		}).catch(() => setIsAdmin(false));
+	}, [token]);
+
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		window.location.href = "/login";
+	};
+
 	return (
-		<header className="w-full  h-[70px] shadow-xl flex justify-center items-center relative bg-accent text-white">
-			<img
-				src="/logo.png"
-				alt="logo"
-				className="w-[60px] h-[60px] object-cover border-[3px] absolute left-1 rounded-full"
-			/>
-			<div className="hidden w-[450px]  md:flex justify-evenly items-center">
-				<Link to="/" className="hidden md:block text-[22px]  m-1">
+		<header className="w-full h-[70px] shadow-xl flex items-center px-4 bg-slate-300 text-black font-semibold">
+			{/* Logo - Left Side */}
+			<div className="flex-shrink-0">
+				<img
+					src="/logo.png"
+					alt="logo"
+					className="w-[60px] h-[60px] object-cover rounded-full border-2 border-white shadow-md"
+				/>
+			</div>
+
+			{/* Navigation Links - Center */}
+			<nav className="hidden md:flex flex-1 justify-center items-center space-x-8">
+				<Link to="/" className="text-[20px] hover:text-blue-600 transition-colors">
 					Home
 				</Link>
-				<Link to="/contact" className="hidden md:block text-[22px]  m-1">
-					contact
-				</Link>
-				<Link to="/gallery" className="hidden md:block text-[22px]  m-1">
-					gallery
-				</Link>
-				{/* items */}
-				<Link to="/items" className="hidden md:block text-[22px]  m-1">
+				<Link to="/items" className="text-[20px] hover:text-blue-600 transition-colors">
 					Items
 				</Link>
+				<Link to="/gallery" className="text-[20px] hover:text-blue-600 transition-colors">
+					Gallery
+				</Link>
+				<Link to="/about" className="text-[20px] hover:text-blue-600 transition-colors">
+					About
+				</Link>
+				<Link to="/contact" className="text-[20px] hover:text-blue-600 transition-colors">
+					Contact
+				</Link>
+				{isAdmin && (
+					<Link to="/admin/" className="text-[20px] font-bold text-red-700 hover:text-red-800 transition-colors">
+						Admin
+					</Link>
+				)}
+			</nav>
+
+			{/* Right Side Actions */}
+			<div className="hidden md:flex items-center space-x-4 ml-auto">
+				{/* Cart Icon */}
 				<Link
 					to="/booking"
-					className="hidden md:block text-[22px] font-bold m-1 absolute right-24"
+					className="relative p-3 text-[22px] text-gray-700 hover:text-blue-600 transition-colors"
+					title="View Bookings"
 				>
 					<FaCartShopping />
 				</Link>
+
+				{/* Logout Button */}
+				{token && (
+					<button
+						onClick={handleLogout}
+						className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-red-600 transition-colors"
+						title="Logout"
+					>
+						<FaSignOutAlt className="text-xl" />
+						<span className="font-medium">Logout</span>
+					</button>
+				)}
 			</div>
+
+			{/* Mobile Menu Button */}
 			<GiHamburgerMenu
-				className="absolute right-5 text-[24px] md:hidden"
-				onClick={() => {
-					setNavPanelOpen(true);
-				}}
+				className="md:hidden text-[24px] ml-auto cursor-pointer hover:text-blue-600 transition-colors"
+				onClick={() => setNavPanelOpen(true)}
 			/>
-      {token!=null&&<button className="hidden md:block absolute right-5 text-[24px]" onClick={()=>{
-        localStorage.removeItem("token")
-        window.location.href = "/login"
-      }}>
-        logout
-      </button>}
+
+			{/* Mobile Navigation Panel */}
 			<MobileNavPanel isOpen={navPanelOpen} setOpen={setNavPanelOpen} />
 		</header>
 	);

@@ -6,27 +6,46 @@ const supabase_url = "https://slxufmjtekhfnkezuegp.supabase.co";
 
 const supabase = createClient(supabase_url, anon_key);
 
-export default function mediaUpload(file) {
-	return new Promise((resolve, reject) => {
-        if(file == null){
-            reject("No file selected")
-        }
+export default async function mediaUpload(file, folder = "products") {
+    if (file == null) {
+        throw new Error("No file selected");
+    }
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    if (!backendUrl) {
+        throw new Error("VITE_BACKEND_URL not set");
+    }
 
-		const timestamp = new Date().getTime();
-		const fileName = timestamp + file.name;
+    const contentType = file.type || "application/octet-stream";
 
-		supabase.storage
-			.from("images")
-			.upload(fileName, file, {
-				cacheControl: "3600",
-				upsert: false,
-			})
-			.then(() => {
-				const publicUrl = supabase.storage.from("images").getPublicUrl(fileName)
-					.data.publicUrl;
-				resolve(publicUrl);
-			}).catch(()=>{
-                reject("Error uploading file")
-            })
-	});
+    // Request a presigned upload URL from the backend
+    const presignRes = await fetch(`${backendUrl}/api/uploads/presign`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token") || ""}`
+        },
+        body: JSON.stringify({ contentType, folder })
+    });
+
+    if (!presignRes.ok) {
+        const errText = await presignRes.text();
+        throw new Error(errText || "Failed to presign upload");
+    }
+
+    const { uploadUrl, publicUrl } = await presignRes.json();
+
+    // Upload the file directly to R2 using the presigned URL
+    const putRes = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": contentType },
+        body: file
+    });
+
+    if (!putRes.ok) {
+        const errText = await putRes.text();
+        throw new Error(errText || "Failed to upload file to storage");
+    }
+
+    // Return the public URL to be stored in the DB
+    return publicUrl;
 }

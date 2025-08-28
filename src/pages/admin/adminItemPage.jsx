@@ -20,7 +20,13 @@ export default function AdminItemsPage() {
 				})
 				.then((res) => {
 					console.log(res.data);
-					setItems(res.data);
+					const body = res.data;
+					const list = Array.isArray(body?.data)
+						? body.data
+						: Array.isArray(body)
+							? body
+							: [];
+					setItems(list);
 					setItemsLoaded(true);
 				})
 				.catch((err) => {
@@ -76,7 +82,7 @@ export default function AdminItemsPage() {
 								>
 									<td className="p-3 border">{product.key}</td>
 									<td className="p-3 border">{product.name}</td>
-									<td className="p-3 border">${product.price.toFixed(2)}</td>
+									<td className="p-3 border">Rs{product.price.toFixed(2)}</td>
 									<td className="p-3 border">{product.category}</td>
 									<td className="p-3 border">{product.dimensions}</td>
 									<td className="p-3 border">

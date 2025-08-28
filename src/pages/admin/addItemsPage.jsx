@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/mediaUpload";
@@ -9,12 +9,41 @@ export default function AddItemPage() {
 	const [productName, setProductName] = useState("");
 	const [productPrice, setProductPrice] = useState(0);
 	const [productCategory, setProductCategory] = useState("audio");
+	const [priceCategory, setPriceCategory] = useState("standard");
 	const [productDimensions, setProductDimensions] = useState("");
 	const [productDescription, setProductDescription] = useState("");
 	const [productImages, setProductImages] = useState([]);
 	const navigate = useNavigate();
 
+	const imagePreviews = useMemo(() => {
+		return Array.from(productImages || []).map((file) => ({
+			name: file.name,
+			url: URL.createObjectURL(file),
+		}));
+	}, [productImages]);
+
 	async function handleAddItem() {
+		// basic validation to match backend requirements
+		if(!productName || productName.trim().length === 0){
+			toast.error("Product name is required");
+			return;
+		}
+		if(productPrice === null || productPrice === undefined || String(productPrice).toString().trim() === ""){
+			toast.error("Price is required");
+			return;
+		}
+		if(isNaN(Number(productPrice)) || Number(productPrice) < 0){
+			toast.error("Price must be a valid number");
+			return;
+		}
+		if(!productDimensions || productDimensions.trim().length === 0){
+			toast.error("Dimensions are required");
+			return;
+		}
+		if(!productDescription || productDescription.trim().length === 0){
+			toast.error("Description is required");
+			return;
+		}
 		const promises = [];
 
 		//image 4
@@ -34,6 +63,7 @@ export default function AddItemPage() {
 			productName,
 			productPrice,
 			productCategory,
+			priceCategory,
 			productDimensions,
 			productDescription
 		);
@@ -56,8 +86,9 @@ export default function AddItemPage() {
 					{
 						key: productKey,
 						name: productName,
-						price: productPrice,
+						price: Number(productPrice),
 						category: productCategory,
+						priceCategory: priceCategory,
 						dimensions: productDimensions,
 						description: productDescription,
 						image : imageUrls,
@@ -111,6 +142,15 @@ export default function AddItemPage() {
 					<option value="audio">Audio</option>
 					<option value="lights">Lights</option>
 				</select>
+				<select
+					value={priceCategory}
+					onChange={(e) => setPriceCategory(e.target.value)}
+					className="w-full p-2 border rounded"
+				>
+					<option value="standard">Standard</option>
+					<option value="discounted">Discounted</option>
+					<option value="premium">Premium</option>
+				</select>
 				<input
 					type="text"
 					placeholder="Product Dimensions"
@@ -128,11 +168,32 @@ export default function AddItemPage() {
 				<input
 					type="file"
 					multiple
+					accept="image/*"
 					onChange={(e) => {
 						setProductImages(e.target.files);
 					}}
 					className="w-full p-2 border rounded"
 				/>
+				{imagePreviews.length > 0 && (
+					<div className="w-full grid grid-cols-3 gap-2 mt-2">
+						{imagePreviews.map((img, idx) => (
+							<div key={idx} className="relative">
+								<img src={img.url} alt={img.name} className="w-full h-24 object-cover rounded" />
+								<button
+									type="button"
+									className="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
+									onClick={() => {
+										const next = Array.from(productImages);
+										next.splice(idx, 1);
+										setProductImages(next);
+									}}
+								>
+									Remove
+								</button>
+							</div>
+						))}
+					</div>
+				)}
 				<button
 					onClick={handleAddItem}
 					className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
