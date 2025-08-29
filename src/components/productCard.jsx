@@ -23,13 +23,13 @@ export default function ProductCard({ item }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
+    <div className="bg-gray-900 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
       {/* Image */}
       <div className="relative w-full aspect-[4/3] overflow-hidden">
         <img
           src={cover}
           alt={item.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-center group-hover:scale-105 transition-transform duration-500"
         />
 
         {/* Availability Badge */}
@@ -52,7 +52,7 @@ export default function ProductCard({ item }) {
       {/* Content */}
       <div className="p-5">
         {/* Product Name */}
-        <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+        <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
           {item.name}
         </h3>
 

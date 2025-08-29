@@ -24,7 +24,7 @@ export default function ImageSlider(props){
 
     return(
         <div className="w-full flex flex-col items-center ">
-            <img src={selectedImage} alt="product" className="w-full h-[300px] md:h-[500px] object-cover" onError={(e)=>{ e.currentTarget.src = "/logo.png"; }} />
+            <img src={selectedImage} alt="product" className="w-[30vw] h-[30vw] object-center" onError={(e)=>{ e.currentTarget.src = "/logo.png"; }} />
             <div className="w-full mt-[20px] h-[90px] flex justify-center items-center">
                 {
                     resolvedImages.map((image,index)=>{
