@@ -4,14 +4,13 @@ import { FaCartShopping } from "react-icons/fa6";
 import { FaSignOutAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import MobileNavPanel from "./mobileNavPanel";
+import MobileNavPanel from "./MobileNavPanel";
 
 export default function Header() {
   const [navPanelOpen, setNavPanelOpen] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem("token")); // ✅ token as state
+  const [token, setToken] = useState(localStorage.getItem("token")); 
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Fetch user role if token exists
   useEffect(() => {
     if (!token) {
       setIsAdmin(false);
@@ -29,14 +28,12 @@ export default function Header() {
       .catch(() => setIsAdmin(false));
   }, [token]);
 
-  // Logout handler
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setToken(null); // ✅ trigger React re-render
+    setToken(null); // React re-render
     window.location.href = "/login";
   };
 
-  // Optional: update token state if login happens elsewhere
   useEffect(() => {
     const handleStorageChange = () => {
       setToken(localStorage.getItem("token"));
@@ -132,7 +129,13 @@ export default function Header() {
       />
 
       {/* Mobile Navigation Panel */}
-      <MobileNavPanel isOpen={navPanelOpen} setOpen={setNavPanelOpen} />
+      <MobileNavPanel
+        isOpen={navPanelOpen}
+        setOpen={setNavPanelOpen}
+        token={token}
+        isAdmin={isAdmin}
+        handleLogout={handleLogout}
+      />
     </header>
   );
 }
