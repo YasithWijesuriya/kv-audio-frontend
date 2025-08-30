@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/axios";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaSignOutAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -16,7 +16,7 @@ export default function Header() {
 			setIsAdmin(false);
 			return;
 		}
-		axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`, {
+api.get("/api/users/", {
 			headers: { Authorization: `Bearer ${token}` }
 		}).then((res) => {
 			const user = res.data;

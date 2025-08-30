@@ -1,9 +1,10 @@
 // src/pages/items.jsx
-import axios from "axios";
+import api from "../../utils/axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ProductCard from "../../components/productCard";
 import { FaSearch, FaFilter, FaSort, FaList } from "react-icons/fa";
+
 export default function Items() {
   const [state, setState] = useState("loading"); // loading, success, error
   const [items, setItems] = useState([]);
@@ -16,8 +17,7 @@ export default function Items() {
   // Fetch products
   useEffect(() => {
     if (state === "loading") {
-      axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/products`)
+      api.get("/api/products")
         .then((res) => {
           const body = res.data;
           const list = Array.isArray(body?.data) ? body.data : Array.isArray(body) ? body : [];
@@ -141,7 +141,18 @@ export default function Items() {
               </select>
             </div>
 
-            
+            {/* View Mode */}
+            <div className="flex items-center space-x-2">
+              <FaList className="text-black" />
+              <select
+                value={viewMode}
+                onChange={(e) => setViewMode(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="grid">Grid View</option>
+                <option value="list">List View</option>
+              </select>
+            </div>
           </div>
         </div>
 

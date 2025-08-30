@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./register.css";
-import axios from "axios";
+import api from "../../utils/axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -75,7 +75,7 @@ export default function RegisterPage() {
     setIsLoading(true);
     console.log({ firstName, lastName, email, password, address, phone });
     
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/`, {
+api.post("/api/users/", {
       email: email.trim(),
       firstName: firstName.trim(),
       lastName: lastName.trim(),

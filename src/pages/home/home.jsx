@@ -1,26 +1,25 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import api from "../../utils/axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 
 export default function Home() {
-  const [featured, setFeatured] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [featured, setFeatured] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/products`)
+    api.get("/api/products")
       .then((res) => {
-        const body = res.data
-        const list = Array.isArray(body?.data) ? body.data : (Array.isArray(body) ? body : [])
-        const items = list.slice(0, 8)
-        setFeatured(items)
+        const body = res.data;
+        const list = Array.isArray(body?.data) ? body.data : (Array.isArray(body) ? body : []);
+        const items = list.slice(0, 8);
+        setFeatured(items);
       })
       .catch(() => {
-        setFeatured([])
+        setFeatured([]);
       })
-      .finally(() => setLoading(false))
-  }, [])
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="w-full bg-gray-200">
@@ -129,7 +128,5 @@ export default function Home() {
       {/* Footer Spacer */}
       <div className="h-8" />
     </div>
-  )
+  );
 }
-
-

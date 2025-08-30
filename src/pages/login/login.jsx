@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../utils/axios";
 import "./login.css";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -16,7 +16,7 @@ export default function LoginPage() {
     onSuccess: (res) => {
       setIsGoogleLoading(true);
       console.log(res);
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/google`, {
+api.post("/api/users/google", {
         accessToken: res.access_token
       }).then((res) => {
         console.log(res);
@@ -66,9 +66,7 @@ export default function LoginPage() {
 
     setIsLoading(true);
     console.log(email, password);
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
-
-    axios.post(`${backendUrl}/api/users/login`, {
+api.post("/api/users/login", {
       email: email.trim(),
       password: password
     }).then((res) => {

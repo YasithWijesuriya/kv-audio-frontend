@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatDate, loadCart } from "../../utils/cart";
 import BookingItem from "../../components/bookingItem";
-import axios from "axios";
+import api from "../../utils/axios";
 import toast from "react-hot-toast";
 
 export default function BookingPage(){
@@ -21,7 +21,7 @@ export default function BookingPage(){
         cartInfo.startingDate = startingDate;
         cartInfo.endingDate = endingDate;
         cartInfo.days = daysBetween;
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/quote`,
+api.post("/api/orders/quote",
             cartInfo
         ).then((res)=>{
             console.log(res.data)
@@ -42,7 +42,7 @@ export default function BookingPage(){
         cart.days = daysBetween;
 
         const token = localStorage.getItem("token");
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders`, cart, {
+api.post("/api/orders", cart, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
