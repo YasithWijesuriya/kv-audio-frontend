@@ -4,7 +4,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { FaSignOutAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import MobileNavPanel from "./MobileNavPanel";
+import MobileNavPanel from "../components/mobileNavPanel";
 
 export default function Header() {
   const [navPanelOpen, setNavPanelOpen] = useState(false);
